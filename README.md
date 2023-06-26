@@ -1,9 +1,9 @@
-# Hardware Requirement
+## Hardware Requirement
 This script has been tested on a GPU server with two RTX A6000 GPUs. 
 * OS: Ubuntu 22.04
 * CUDA Version: 11.7
 
-# Setup Environment and Install Dependency
+## Setup Environment and Install Dependency
 * Insatll anaconda https://docs.conda.io/en/latest/miniconda.html  
 * Create an anaconda environment:
 ```bash
@@ -31,21 +31,21 @@ conda env create -f environment.yml
 </s>
 
 
-# Configure wandb 
+## Configure wandb 
 a tool for monitoring training proress, similar to tensorboard
 ```bash
 wandb init
 ```
 
-# Configure Huggingface Account
+## Configure Huggingface Account
 You need a huggingface account to load model's checkpoint from the cloud
 ```bash
 huggingface-cli login
 ```
 
-# Download Models' checkpoints
+## Download Models' checkpoints
 
-## SciBERT-based citation intent classifier
+### SciBERT-based citation intent classifier
 ```python
 from huggingface_hub import hf_hub_download
 hf_hub_download(repo_id="nianlong/scibert-citation-intent-classifier", 
@@ -54,7 +54,7 @@ hf_hub_download(repo_id="nianlong/scibert-citation-intent-classifier",
 
 ```
 
-# Download Dataset
+## Download Dataset
 ```python
 from datasets import load_dataset
 import json
@@ -73,10 +73,10 @@ for split, fname in [ ( "train", "train.jsonl"), ( "validation", "val.jsonl"),("
 ```
 
 
-# Start Supervised Finetuning
+## Start Supervised Finetuning
 
-## Decoder-only Models
-### Training the Decoder-only models. Supported models: LLaMa, Galactica, and GPT-Neo
+### Decoder-only Models
+#### Training the Decoder-only models. Supported models: LLaMa, Galactica, and GPT-Neo
 
 ```bash
 NCCL_P2P_DISABLE=1 torchrun --rdzv-endpoint=localhost:29500 --nnodes 1  --nproc_per_node 2 train_sft.py --model_path facebook/galactica-125m --model_type galactica --output_dir sft_model/galactica-125m-peft --streaming 1 --max_steps 5000 --num_warmup_steps 500 --eval_freq 1000 --save_freq 1000 --log_freq 10 --batch_size 16 --gradient_accumulation_steps 8 --use_lora 1 --train_dataset_name data/train.jsonl --val_dataset_name data/val.jsonl --quantization int4 --learning_rate 1e-4 
@@ -97,7 +97,7 @@ More default parameters, such as lora configuration, can be found in the train.p
 **Note: GPT-NEO is not supported by low-precision speedup in this script. So when training GPT-NEO please set use_lora to 0**
 
 
-### Merge the peft adapter with the original model to produce a huggingface model.
+#### Merge the peft adapter with the original model to produce a huggingface model.
 This is only needed if you fine-tuned the LM using LoRA, current only Galactica and LLaMa are supported.
 
 For Galactica:
@@ -113,7 +113,7 @@ python convert_peft_to_hf.py --base_model_path huggyllama/llama-7b --lora_model_
 ```
 
 
-### Convert huggingface model to Ctranslate model
+#### Convert huggingface model to Ctranslate model
 
 For Galactica:
 ```bash
@@ -125,18 +125,18 @@ For LLaMa:
 python convert_hf_to_ct2.py --model sft_model/llama-7b-hf --output_dir sft_model/llama-7b-ct2 --quantization int8_float16 --load_as_float16 --low_cpu_mem_usage --model_type llama
 ```
 
-## Encoder-Decoder Models. Supported models: BART
+### Encoder-Decoder Models. Supported models: BART
 
-### Training
+#### Training
 
 ```bash
 NCCL_P2P_DISABLE=1 torchrun --rdzv-endpoint=localhost:29500 --nnodes 1 --nproc-per-node 2 train_sft_seq2seq_bart.py --model_path facebook/bart-base --output_dir sft_model/bart-base --streaming 1 --log_freq 1 --learning_rate 1e-5 --batch_size 64 --gradient_accumulation_steps 1 --train_dataset_name data/train.jsonl --val_dataset_name data/val.jsonl --max_steps 5000 --eval_freq 1000 --save_freq 1000 --num_warmup_steps 500
 ```
 
-# Start PPO Finetuning
+## Start PPO Finetuning
 PPO Finetuning only support Decoder-only model: Galactica and LLaMa
 
-## Training
+### Training
 
 For Galactica:
 
@@ -153,17 +153,17 @@ For LLaMa:
 NCCL_P2P_DISABLE=1 accelerate launch --multi_gpu --num_machines 1  --num_processes 2 train_ppo.py --model_path sft_model/llama-7b-hf --model_type galactica --output_dir ppo_model/llama-7b-peft  --train_dataset_name data/train.jsonl --save_freq 10 --batch_size 256 --mini_batch_size 4 --gradient_accumulation_steps  1 --quantization int4
 ```
 
-### Merge the peft adapter with the original model to produce a huggingface model.
+#### Merge the peft adapter with the original model to produce a huggingface model.
 Same as the supervised finetuning stage.
 
 **Note:**
 When calling the convert_peft_to_hf.py, be aware that the parameter --base_model_path is no longer the pretrained language model, but the path to the supervised finetuned model! For example, for Galactica-125m it would be "sft_model/galactica-125m-hf", not "facebook/galactica-125m-hf"
 
-### Convert huggingface model to Ctranslate model
+#### Convert huggingface model to Ctranslate model
 Same as the supervised finetuning stage.
 
 
-### Use the citation generator
+#### Use the citation generator
 
 ```python
 from generator import CitationGeneratorFast, CitationGenerator, BartCitationGenerator
@@ -245,7 +245,7 @@ print(gen_cit_with_intent_and_keywords["citation"])
 ```
 
 
-# Load fine-tuned citation generation models
+## Load fine-tuned citation generation models
 
 We have pushed the finetuned citation generation huggingface models to huggingface hub. The model name are listed as below:
 
