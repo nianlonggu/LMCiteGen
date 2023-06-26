@@ -1,0 +1,7 @@
+__pycache__/
+.ipynb_checkpoints/
+reward_model/citation_intent_classification/model/BertClassifier/5_5_0.05_0.01/model_batch_515.pt
+sft_model/
+ppo_model/
+data/*.jsonl
+wandb/
