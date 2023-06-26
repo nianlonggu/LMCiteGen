@@ -1,3 +1,6 @@
+# LMCiteGen: Controllable Citation Sentence Generation with Language Models
+
+
 ## Hardware Requirement
 This script has been tested on a GPU server with two RTX A6000 GPUs. 
 * OS: Ubuntu 22.04
