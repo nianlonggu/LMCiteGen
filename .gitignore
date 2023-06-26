@@ -5,3 +5,4 @@ sft_model/
 ppo_model/
 data/*.jsonl
 wandb/
+results/
