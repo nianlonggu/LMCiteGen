@@ -13,12 +13,14 @@ This script has been tested on a GPU server with two RTX A6000 GPUs.
 conda create -n citgen python=3.10
 ```
 <br>
-Activate the environment
+* Activate the environment
+
 ```bash
 conda activate citgen
 ```
 <br>
-Install packages in the environment
+* Install packages in the environment
+
 ```bash
 pip install -r requirements.txt
 ```
