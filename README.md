@@ -9,21 +9,17 @@ This script has been tested on a GPU server with two RTX A6000 GPUs.
 ## Setup Environment and Install Dependency
 * Insatll anaconda https://docs.conda.io/en/latest/miniconda.html  
 * Create an anaconda environment:
-```bash
-conda create -n citgen python=3.10
-```
-<br>
+  ```bash
+  conda create -n citgen python=3.10
+  ```
 * Activate the environment
-
-```bash
-conda activate citgen
-```
-<br>
+  ```bash
+  conda activate citgen
+  ```
 * Install packages in the environment
-
-```bash
-pip install -r requirements.txt
-```
+  ```bash
+  pip install -r requirements.txt
+  ```
 
 Suppose your cuda version is cuda1XX, then in the terminal run the following command:
 ```bash
