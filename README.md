@@ -1,3 +1,6 @@
+# Controllable Citation Sentence Generation with Language Models
+
+This is the code and data for the work [Controllable Citation Sentence Generation with Language Models](https://arxiv.org/abs/2211.07066)
 
 ## Hardware Requirement
 This script has been tested on a GPU server with two RTX A6000 GPUs. 
@@ -338,3 +341,17 @@ print(gen_cit_with_intent_and_keywords["citation"])
 ```
 
 Or we can convert the Galactica or LLaMa model by Ctranslate2, using the script convert_hf_to_ct2.py, to speed up the inference.
+
+# Citation
+
+When using our code or models for your work, please cite the following paper:
+```
+@misc{gu2022controllable,
+      title={Controllable Citation Text Generation}, 
+      author={Nianlong Gu and Richard H. R. Hahnloser},
+      year={2022},
+      eprint={2211.07066},
+      archivePrefix={arXiv},
+      primaryClass={cs.CL}
+}
+```
