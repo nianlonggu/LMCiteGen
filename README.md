@@ -346,12 +346,26 @@ Or we can convert the Galactica or LLaMa model by Ctranslate2, using the script 
 
 When using our code or models for your work, please cite the following paper:
 ```
-@misc{gu2022controllable,
-      title={Controllable Citation Text Generation}, 
-      author={Nianlong Gu and Richard H. R. Hahnloser},
-      year={2022},
-      eprint={2211.07066},
-      archivePrefix={arXiv},
-      primaryClass={cs.CL}
+@inproceedings{gu-hahnloser-2024-controllable,
+    title = "Controllable Citation Sentence Generation with Language Models",
+    author = "Gu, Nianlong  and
+      Hahnloser, Richard",
+    editor = "Ghosal, Tirthankar  and
+      Singh, Amanpreet  and
+      Waard, Anita  and
+      Mayr, Philipp  and
+      Naik, Aakanksha  and
+      Weller, Orion  and
+      Lee, Yoonjoo  and
+      Shen, Shannon  and
+      Qin, Yanxia",
+    booktitle = "Proceedings of the Fourth Workshop on Scholarly Document Processing (SDP 2024)",
+    month = aug,
+    year = "2024",
+    address = "Bangkok, Thailand",
+    publisher = "Association for Computational Linguistics",
+    url = "https://aclanthology.org/2024.sdp-1.4",
+    pages = "22--37",
+    abstract = "Citation generation aims to generate a citation sentence that refers to a chosen paper in the context of a manuscript. However, a rigid citation generation process is at odds with an author{'}s desire to control specific attributes, such as 1) the citation intent, e.g., either introducing background information or comparing results, and 2) keywords that should appear in the citation text. To provide these degrees of controllability during citation generation, we propose to integrate the manuscript context, the context of the referenced paper, and the desired control attributes into a structured template and use it to fine-tune a language model (LM) via next-token prediction. We then utilize Proximal Policy Optimization to directly optimize the LM in favor of a high score of our proposed controllability metric. The proposed workflow harmoniously combines citation attribute suggestion and conditional citation generation into one LM, allowing for better user control.",
 }
 ```
